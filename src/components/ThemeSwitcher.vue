@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="label">
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+    </div>
     <div class="wrapper">
       <input
         type="range"
@@ -21,6 +26,13 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
+.label {
+  padding: 0 10px;
+  font-size: 12px;
+  & span:not(span:last-child) {
+    margin-right: 16px;
+  }
+}
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -38,16 +50,16 @@ export default {}
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      height: 18px;
-      width: 18px;
+      height: 16px;
+      width: 16px;
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);
     }
     &::-moz-range-thumb {
       border: none;
-      height: 18px;
-      width: 18px;
+      height: 16px;
+      width: 16px;
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);

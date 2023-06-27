@@ -45,7 +45,7 @@ export default {
     grid-column: 3/5;
   }
   &--reset {
-    font-size: 16px;
+    font-size: 20px;
     color: var(--reset-del-text);
     background-color: var(--key-reset-del);
     box-shadow: 0 4px var(--key-reset-del-shadow);

@@ -30,7 +30,8 @@ export default {
   & .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 13px;
+    column-gap: clamp(13px, 4%, 24px);
+    row-gap: clamp(17px, 4vw, 28px);
   }
 }
 </style>
