@@ -1,0 +1,98 @@
+/* color palette from <https://github.com/vuejs/theme> */
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body[data-theme='theme_1'] {
+  /*Backgrounds*/
+
+  --bg: hsl(222, 26%, 31%);
+  --toggle-keypad-bg: hsl(223, 31%, 20%);
+  --screen-bg: hsl(224, 36%, 15%);
+
+  /*Keys*/
+
+  --key-reset-del: hsl(225, 21%, 49%);
+  --key-reset-del-shadow: hsl(224, 28%, 35%);
+  --key-reset-del-hover: #a2b3e1;
+  --key-equally-toggle: hsl(6, 63%, 50%);
+  --key-equally-toggle-shadow: hsl(6, 70%, 34%);
+  --key-equally-toggle-hover: #f96c5b;
+  --key: hsl(30, 25%, 89%);
+  --key-shadow: hsl(28, 16%, 65%);
+  --key-hover: #fff;
+
+  /*Text*/
+  --title: #fff;
+  --text: hsl(221, 14%, 31%);
+  --equally-text: var(--reset-del-text);
+  --reset-del-text: hsl(0, 0%, 100%);
+}
+body[data-theme='theme_2'] {
+  /*Backgrounds*/
+
+  --bg: hsl(0, 0%, 90%);
+  --toggle-keypad-bg: hsl(0, 5%, 81%);
+  --screen-bg: hsl(0, 0%, 93%);
+
+  /*Keys*/
+
+  --key-reset-del: hsl(185, 42%, 37%);
+  --key-reset-del-shadow: hsl(185, 58%, 25%);
+  --key-reset-del-hover: #62b4be;
+  --key-equally-toggle: hsl(25, 98%, 40%);
+  --key-equally-toggle-shadow: hsl(25, 99%, 27%);
+  --key-equally-toggle-hover: #ff8b38;
+  --key: hsl(45, 7%, 89%);
+  --key-shadow: hsl(35, 11%, 61%);
+  --key-hover: #fff;
+
+  /*Text*/
+  --title: var(--text);
+  --text: hsl(60, 10%, 19%);
+  --equally-text: var(--reset-del-text);
+  --reset-del-text: hsl(0, 0%, 100%);
+}
+body[data-theme='theme_3'] {
+  /*Backgrounds*/
+
+  --bg: hsl(268, 75%, 9%);
+  --toggle-keypad-bg: hsl(268, 71%, 12%);
+  --screen-bg: var(--toggle-keypad-bg);
+
+  /*Keys*/
+
+  --key-reset-del: hsl(281, 89%, 26%);
+  --key-reset-del-shadow: hsl(285, 91%, 52%);
+  --key-reset-del-hover: #8631b0;
+
+  --key-equally-toggle: hsl(176, 100%, 44%);
+  --key-equally-toggle-shadow: hsl(177, 92%, 70%);
+  --key-equally-toggle-hover: #94fff9;
+  --key: hsl(268, 47%, 21%);
+  --key-shadow: hsl(290, 70%, 36%);
+  --key-hover: #6b34ac;
+
+  /*Text*/
+  --title: var(--text);
+  --text: hsl(52, 100%, 62%);
+  --equally-text: hsl(198, 20%, 13%);
+  --reset-del-text: hsl(0, 0%, 100%);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--reset-del-text);
+  min-height: 100vh;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
