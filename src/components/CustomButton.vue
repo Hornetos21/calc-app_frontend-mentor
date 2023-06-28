@@ -1,5 +1,6 @@
 <template>
   <button
+    @click="handleBtn"
     class="btn"
     :class="{
       'btn--reset': btn === 'RESET' || btn === 'DEL',
@@ -12,10 +13,19 @@
 
 <script>
 export default {
+  // data() {
+  //   return {
+  //     operator: '',
+  //   }
+  // },
+  // methods: {},
   props: {
     btn: {
       type: String,
       required: true,
+    },
+    handleBtn: {
+      type: Function,
     },
   },
 }
@@ -24,7 +34,7 @@ export default {
 <style lang="scss" scoped>
 .btn {
   font-family: inherit;
-  font-size: 32px;
+  font-size: clamp(32px, 4vw, 40px);
   color: var(--text);
   border: none;
   height: 60px;
@@ -60,6 +70,16 @@ export default {
     color: var(--equally-text);
     &:hover {
       background-color: var(--key-equally-toggle-hover);
+    }
+  }
+}
+@media (min-width: 1440px) {
+  .btn {
+    border-radius: 10px;
+    //font-size: 40px;
+    &--reset,
+    &--equally {
+      font-size: 28px;
     }
   }
 }

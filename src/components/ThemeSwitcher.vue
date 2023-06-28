@@ -12,17 +12,25 @@
         onchange=""
         min="1"
         step="1"
-        id="custom-toggle"
+        id="theme-toggle"
         class="switcher"
         max="3"
         value="1"
+        @click="setTheme"
       />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    setTheme: {
+      type: Function,
+      required: true,
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -47,6 +55,7 @@ export default {}
     height: 26px;
     box-shadow: 0 0 0 black;
     cursor: pointer;
+
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -55,7 +64,11 @@ export default {}
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);
+      &:hover {
+        background-color: var(--key-equally-toggle-hover);
+      }
     }
+
     &::-moz-range-thumb {
       border: none;
       height: 16px;
@@ -63,6 +76,9 @@ export default {}
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);
+      &:hover {
+        background-color: var(--key-equally-toggle-hover);
+      }
     }
   }
 }
