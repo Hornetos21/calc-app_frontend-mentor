@@ -16,21 +16,13 @@
         class="switcher"
         max="3"
         value="1"
-        @click="setTheme"
       />
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    setTheme: {
-      type: Function,
-      required: true,
-    },
-  },
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>

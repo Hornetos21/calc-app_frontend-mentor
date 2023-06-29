@@ -38,5 +38,8 @@ export default {
   text-align: end;
   font-family: inherit;
   pointer-events: none;
+  &::placeholder {
+    color: var(--title);
+  }
 }
 </style>

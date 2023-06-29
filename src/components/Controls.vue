@@ -2,25 +2,31 @@
   <div class="controls">
     <div class="grid">
       <custom-button
-        v-for="btn in controls"
-        :btn="btn"
-        :key="btn"
-        :handle-btn="handleBtn"
-      ></custom-button>
+        :name="btn.type"
+        v-for="btn in buttons"
+        @click="handleBtn"
+        :class="{
+          'btn--reset': btn.text === 'RESET' || btn.text === 'DEL',
+          'btn--equally': btn.text === '=',
+        }"
+      >
+        {{ btn.text }}
+      </custom-button>
     </div>
   </div>
 </template>
 
 <script>
-import CustomButton from '@/components/CustomButton.vue'
+import CustomButton from '@/components/UI/CustomButton.vue'
 
 export default {
   components: { CustomButton },
   props: {
-    controls: {
+    buttons: {
       type: Array,
       required: true,
     },
+
     handleBtn: {
       type: Function,
     },
