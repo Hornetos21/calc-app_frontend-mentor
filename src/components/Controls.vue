@@ -4,6 +4,7 @@
       <custom-button
         :name="btn.type"
         v-for="btn in buttons"
+        :key="btn.text"
         @click="handleBtn"
         :class="{
           'btn--reset': btn.text === 'RESET' || btn.text === 'DEL',

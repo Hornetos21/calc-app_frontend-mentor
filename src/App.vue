@@ -59,12 +59,19 @@ export default {
       },
     }
   },
+  mounted() {
+    const theme = localStorage.getItem('theme') || 1
+    const toggleTheme = document.querySelector('#theme-toggle')
+    toggleTheme.value = theme
+    document.body.setAttribute('data-theme', `theme_${theme}`)
+  },
 
   methods: {
     setTheme(e) {
       if (e.target.matches('#theme-toggle')) {
         const key = e.target.value
         document.body.setAttribute('data-theme', this.theme[key])
+        localStorage.setItem('theme', key)
       }
     },
     handleBtn(e) {
