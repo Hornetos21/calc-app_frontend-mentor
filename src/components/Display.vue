@@ -1,45 +1,59 @@
 <template>
-  <input class="display" type="text" v-model="calc.digitA" placeholder="0" />
+  <div class="wrapper-display">
+    <input class="display" type="text" v-model="calc.display" placeholder="0" />
+    <span class="history" type="text" placeholder="0">{{ calc.history }}</span>
+    <!--    <span class="history&#45;&#45;test" type="text" placeholder="0"-->
+    <!--      >test: {{ calc.result }}</span-->
+    <!--    >-->
+  </div>
 </template>
 
 <script>
 export default {
   props: {
     calc: {
-      digitA: {
-        type: String,
-      },
-      digitB: {
-        type: String,
-      },
-      operator: {
-        type: String,
-      },
-      flagOperator: {
-        type: Boolean,
-      },
+      type: Object,
+      required: true,
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.wrapper-display {
+  position: relative;
+  margin-bottom: 24px;
+}
 .display {
-  font-size: clamp(38px, 5vw, 55px);
-  color: var(--title);
   height: clamp(88px, 10vw, 130px);
+  font-size: clamp(38px, 5vw, 55px);
+  padding: 26px;
+  color: var(--title);
   background: var(--screen-bg);
   border-radius: 10px;
-  padding: 26px;
-  margin-bottom: 24px;
-
   width: 100%;
+
   border: none;
   text-align: end;
   font-family: inherit;
   pointer-events: none;
   &::placeholder {
+    font-size: inherit;
     color: var(--title);
+  }
+}
+.history {
+  color: var(--title);
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  opacity: 0.6;
+  &--test {
+    position: absolute;
+    left: 5px;
+    bottom: 0;
   }
 }
 </style>

@@ -20,6 +20,73 @@ import Controls from '@/components/Controls.vue'
 </template>
 
 <script>
+function divideByComma(str) {
+  const arr = str.split('')
+  if (arr.includes('.')) {
+    const comma = arr.findIndex((el) => el === '.')
+
+    for (let i = comma - 3; i > 0; i -= 3) {
+      arr.splice(i, 0, ',')
+    }
+  } else {
+    for (let i = arr.length - 3; i > 0; i -= 3) {
+      arr.splice(i, 0, ',')
+    }
+  }
+
+  return arr.join('')
+}
+
+function calculate(a, b, operator) {
+  const A = Number(a)
+  const B = Number(b)
+  let res = 0
+
+  switch (operator) {
+    case '+':
+      res = A + B
+      break
+    case '-':
+      res = A - B
+      break
+    case '*':
+      res = A * B
+      break
+    case '/':
+      if (b === '0') {
+        res = 'Division by ZERO'
+      } else {
+        res = A / B
+      }
+      break
+  }
+  return res
+}
+
+function checkValueForDoublesZeroDot(value, btn) {
+  if ((value === '0' && btn === '0') || (value.includes('.') && btn === '.'))
+    return true
+}
+
+function zeroDot(value, dot) {
+  if ((dot === '.' && !value) || (dot === '.' && value === '0')) {
+    return true
+  }
+}
+
+function deleteDigitFromEnd(digit) {
+  let str = digit.slice(0, digit.length - 1)
+
+  if (!str.length) str = '0'
+
+  return str
+}
+
+function checkNumber(digitB, btn, btnType) {
+
+  return ''
+}
+
 export default {
   data() {
     return {
@@ -47,10 +114,12 @@ export default {
         digitA: '',
         digitB: '',
         operator: '',
-        flagDisplay: false,
+        flagDigit: true,
         flagOperator: false,
         equally: false,
         result: '',
+        display: '',
+        history: '',
       },
       theme: {
         1: 'theme_1',
@@ -80,106 +149,133 @@ export default {
 
       //   Digits
       if (btnType === 'digit' || btnType === 'dot') {
-        // Exception which a zero
-        if (this.calc.digitA === '0' && btn === '0') return
-        if (this.calc.digitA === '0' && btnType === 'digit')
-          return (this.calc.digitA = btn)
+        this.calc.flagDigit = true
 
-        // Exception with point
-        if (
-          (btn === '.' && !this.calc.digitA) ||
-          (btn === '.' && this.calc.digitA === '0')
-        )
-          this.calc.digitA = '0.'
-        if (this.calc.digitA.includes('.') && btn === '.') return
+        /*Change  digits*/
 
-        // Flag operator
         if (this.calc.flagOperator) {
-          this.calc.digitB = this.calc.digitA
+        //      ------------------------Number B
+          if (checkValueForDoublesZeroDot(this.calc.digitB, btn)) return
+
+          if (this.calc.digitB === '0' && btnType === 'digit') {
+            this.calc.digitB = btn
+          } else if (zeroDot(this.calc.digitB, btn)) {
+            this.calc.digitB = '0.'
+          } else {
+            this.calc.digitB += btn
+          }
+          this.calc.digitB = checkNumber(this.calc.digitB, btn, btnType)
+          this.calc.result = this.calc.digitB
+          //    ---------------------------------
+        } else if (this.calc.equally) {
+          //    ------------------------------Rewrite A
           this.calc.digitA = ''
-          this.calc.digitA += btn
-          this.calc.flagOperator = false
-        } else if (!this.calc.equally) {
-          this.calc.digitA += btn
-        } else {
-          this.calc.digitA = btn
+          if (zeroDot(this.calc.digitA, btn)) {
+            this.calc.digitA = '0.'
+          } else {
+            this.calc.digitA = btn
+          }
+
+          this.calc.result = this.calc.digitA
           this.calc.equally = false
+          this.calc.history = ''
+          //    -------------------------------------
+        } else {
+          //    -------------------------------Number A
+          if (checkValueForDoublesZeroDot(this.calc.digitA, btn)) return
+
+          if (this.calc.digitA === '0' && btnType === 'digit') {
+            this.calc.digitA = btn
+          } else if (zeroDot(this.calc.digitA, btn)) {
+            this.calc.digitA = '0.'
+          } else {
+            this.calc.digitA += btn
+          }
+
+          this.calc.result = this.calc.digitA
+          //    ----------------------------------------
         }
-      }
-      // One digit operator and =
-      if (this.calc.flagOperator && this.calc.digitA && btn === '=') {
-        this.calc.digitB = this.calc.digitA
       }
 
       // Check operator
       if (btnType === 'operator') {
+        this.calc.flagOperator = true
+        this.calc.equally = false
+        this.calc.flagDigit = false
+        this.calc.digitB = ''
+
         if (btn === 'x') {
           this.calc.operator = '*'
         } else {
           this.calc.operator = btn
         }
-        this.calc.flagOperator = true
-      }
 
-      //  Calculation
-
-      switch (this.calc.operator) {
-        case '+':
-          this.calc.result = Number(this.calc.digitB) + Number(this.calc.digitA)
-          break
-        case '-':
-          this.calc.result = Number(this.calc.digitB) - Number(this.calc.digitA)
-          break
-        case '*':
-          this.calc.result = Number(this.calc.digitB) * Number(this.calc.digitA)
-          break
-        case '/':
-          if (this.calc.digitA === '0') {
-            this.calc.result = 'Division by ZERO'
-          } else {
-            this.calc.result =
-              Number(this.calc.digitB) / Number(this.calc.digitA)
-
-            this.calc.result % 2
-              ? (this.calc.result = this.calc.result.toFixed(2))
-              : this.calc.result
-          }
-          break
+        // previous res in A
+        this.calc.digitA = this.calc.result
+        // history
+        this.calc.history = `${this.calc.digitA} ${this.calc.operator}`
       }
 
       // Equally
       if (btn === '=') {
-        if (!this.calc.digitA || !this.calc.digitB) return
-        this.calc.equally = true
+        if (!this.calc.operator) return
 
-        this.calc.digitA = String(this.calc.result)
+        // Write Number A in Number B if not Number B
+        if (this.calc.flagOperator && !this.calc.digitB) {
+          this.calc.digitB = this.calc.digitA
+        }
+
+        this.calc.equally = true
+        this.calc.flagDigit = false
+        this.calc.flagOperator = false
+
+        const res = calculate(
+          this.calc.digitA,
+          this.calc.digitB,
+          this.calc.operator
+        )
+
+        this.calc.result = res.toString().includes('.')
+          ? Number(res.toFixed(6)).toString()
+          : res.toString()
+
+        this.calc.history = `${this.calc.digitA} ${this.calc.operator} ${this.calc.digitB} =`
+
+        this.calc.digitA = this.calc.result
       }
+
       //   Reset
       if (btn === 'RESET') {
         this.calc.digitA = ''
         this.calc.digitB = ''
         this.calc.operator = ''
-        this.calc.flagDisplay = false
+        this.calc.flagDigit = true
         this.calc.flagOperator = false
-        this.calc.result = ''
         this.calc.equally = false
+        this.calc.result = ''
+        this.calc.display = ''
+        this.calc.history = ''
       }
 
-      //   Del
+      //   Delete last digit
       if (btn === 'DEL') {
-        if (!this.calc.digitA) return
-
-        this.calc.digitA = this.calc.digitA.slice(
-          0,
-          this.calc.digitA.length - 1
-        )
-
-        if (!this.calc.digitA.length) {
-          console.log('Null')
-          this.calc.digitA = ''
+        if (!this.calc.result) return
+        if (this.calc.equally) {
+          this.calc.history = ''
+          return
         }
-        console.log('Delete last digit')
+        if (!this.calc.flagDigit) return
+        if (!this.calc.flagOperator) {
+          this.calc.digitA = deleteDigitFromEnd(this.calc.digitA)
+          this.calc.result = this.calc.digitA
+        } else {
+          this.calc.digitB = deleteDigitFromEnd(this.calc.digitB)
+          this.calc.result = this.calc.digitB
+        }
       }
+
+      // convert result with comma
+      this.calc.display = divideByComma(this.calc.result)
     },
   },
 }
