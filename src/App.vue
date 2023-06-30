@@ -24,7 +24,10 @@ import Controls from '@/components/Controls.vue'
         href="https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29"
         target="_blank"
         >Frontend Mentor</a
-      >. Coded by <a href="https://github.com/Hornetos21">Igor Shapovalov</a>.
+      >. Coded by
+      <a href="https://github.com/Hornetos21" target="_blank"
+        >Igor Shapovalov </a
+      >.
     </div>
   </footer>
 </template>
