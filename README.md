@@ -28,8 +28,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- [Solution URL](https://www.frontendmentor.io/solutions/calcapp-on-vue-js-functions-like-windows-calc-46P7V15HNW)
+- [Live Site URL](https://calc-app-frontend-mentor.vercel.app/)
 
 ## My process
 Implemented functions like a calculator from Windows.
