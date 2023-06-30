@@ -1,10 +1,7 @@
 <template>
   <div class="wrapper-display">
     <input class="display" type="text" v-model="calc.display" placeholder="0" />
-    <span class="history" type="text" placeholder="0">{{ calc.history }}</span>
-    <!--    <span class="history&#45;&#45;test" type="text" placeholder="0"-->
-    <!--      >test: {{ calc.result }}</span-->
-    <!--    >-->
+    <span class="history">{{ calc.history }}</span>
   </div>
 </template>
 
@@ -40,6 +37,7 @@ export default {
   &::placeholder {
     font-size: inherit;
     color: var(--title);
+    opacity: 1;
   }
 }
 .history {

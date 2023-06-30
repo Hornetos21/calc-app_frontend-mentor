@@ -17,6 +17,16 @@ import Controls from '@/components/Controls.vue'
     <display :calc="calc" />
     <controls :buttons="buttons" :handle-btn="handleBtn" />
   </main>
+  <footer>
+    <div class="attribution">
+      Challenge by
+      <a
+        href="https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29"
+        target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="https://github.com/Hornetos21">Igor Shapovalov</a>.
+    </div>
+  </footer>
 </template>
 
 <script>
@@ -54,7 +64,7 @@ function calculate(a, b, operator) {
       break
     case '/':
       if (b === '0') {
-        res = 'Division by ZERO'
+        res = 'Division by zero'
       } else {
         res = A / B
       }
@@ -82,9 +92,16 @@ function deleteDigitFromEnd(digit) {
   return str
 }
 
-function checkNumber(digitB, btn, btnType) {
-
-  return ''
+function checkNumber(num, btn, btnType) {
+  let digit = num
+  if (num === '0' && btnType === 'digit') {
+    digit = btn
+  } else if (zeroDot(num, btn)) {
+    digit = '0.'
+  } else {
+    digit += btn
+  }
+  return digit
 }
 
 export default {
@@ -154,16 +171,9 @@ export default {
         /*Change  digits*/
 
         if (this.calc.flagOperator) {
-        //      ------------------------Number B
+          //      ------------------------Number B
           if (checkValueForDoublesZeroDot(this.calc.digitB, btn)) return
 
-          if (this.calc.digitB === '0' && btnType === 'digit') {
-            this.calc.digitB = btn
-          } else if (zeroDot(this.calc.digitB, btn)) {
-            this.calc.digitB = '0.'
-          } else {
-            this.calc.digitB += btn
-          }
           this.calc.digitB = checkNumber(this.calc.digitB, btn, btnType)
           this.calc.result = this.calc.digitB
           //    ---------------------------------
@@ -184,14 +194,7 @@ export default {
           //    -------------------------------Number A
           if (checkValueForDoublesZeroDot(this.calc.digitA, btn)) return
 
-          if (this.calc.digitA === '0' && btnType === 'digit') {
-            this.calc.digitA = btn
-          } else if (zeroDot(this.calc.digitA, btn)) {
-            this.calc.digitA = '0.'
-          } else {
-            this.calc.digitA += btn
-          }
-
+          this.calc.digitA = checkNumber(this.calc.digitA, btn, btnType)
           this.calc.result = this.calc.digitA
           //    ----------------------------------------
         }
@@ -275,13 +278,16 @@ export default {
       }
 
       // convert result with comma
-      this.calc.display = divideByComma(this.calc.result)
+      this.calc.display =
+        this.calc.result === 'Division by zero'
+          ? this.calc.result
+          : divideByComma(this.calc.result)
     },
   },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
   display: flex;
   height: 48px;
@@ -305,5 +311,28 @@ h1 {
 p {
   align-self: flex-end;
   font-size: 13px;
+}
+main {
+  padding-bottom: 40px;
+}
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  padding: 10px;
+  .attribution {
+    color: var(--title);
+    a {
+      color: var(--key-equally-toggle);
+      text-decoration: none;
+      opacity: 1;
+      transition: opacity 0.2s;
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
 }
 </style>

@@ -56,6 +56,7 @@ export default {}
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);
+      transition: background-color 0.2s;
       &:hover {
         background-color: var(--key-equally-toggle-hover);
       }
@@ -68,6 +69,7 @@ export default {}
       border-radius: 50%;
       background-color: var(--key-equally-toggle);
       box-shadow: 0 0 1px 1px var(--key-equally-toggle-shadow);
+      transition: background-color 0.2s;
       &:hover {
         background-color: var(--key-equally-toggle-hover);
       }

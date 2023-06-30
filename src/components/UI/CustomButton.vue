@@ -3,17 +3,7 @@
 </template>
 
 <script>
-export default {
-  // props: {
-  //   btn: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  //   handleBtn: {
-  //     type: Function,
-  //   },
-  // },
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
@@ -28,6 +18,7 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   padding-top: 6px;
+  transition: background-color 0.2s;
 
   &:hover {
     background-color: var(--key-hover);
@@ -46,6 +37,7 @@ export default {
     color: var(--reset-del-text);
     background-color: var(--key-reset-del);
     box-shadow: 0 4px var(--key-reset-del-shadow);
+    transition: background-color 0.2s;
 
     &:hover {
       background-color: var(--key-reset-del-hover);
@@ -57,6 +49,7 @@ export default {
     background-color: var(--key-equally-toggle);
     box-shadow: 0 4px var(--key-equally-toggle-shadow);
     color: var(--equally-text);
+    transition: background-color 0.2s;
 
     &:hover {
       background-color: var(--key-equally-toggle-hover);
@@ -67,7 +60,6 @@ export default {
 @media (min-width: 1440px) {
   .btn {
     border-radius: 10px;
-    //font-size: 40px;
     &--reset,
     &--equally {
       font-size: 28px;
