@@ -1,0 +1,25 @@
+export const controls = [
+  { text: '7', type: 'digit' },
+  { text: '8', type: 'digit' },
+  { text: '9', type: 'digit' },
+  { text: 'DEL', type: 'delete' },
+  { text: '4', type: 'digit' },
+  { text: '5', type: 'digit' },
+  { text: '6', type: 'digit' },
+  { text: '+', type: 'operator' },
+  { text: '1', type: 'digit' },
+  { text: '2', type: 'digit' },
+  { text: '3', type: 'digit' },
+  { text: '-', type: 'operator' },
+  { text: '.', type: 'dot' },
+  { text: '0', type: 'digit' },
+  { text: '/', type: 'operator' },
+  { text: 'x', type: 'operator' },
+  { text: 'RESET', type: 'reset' },
+  { text: '=', type: 'equally' },
+]
+export const themes = {
+  1: 'theme_1',
+  2: 'theme_2',
+  3: 'theme_3',
+}

@@ -5,7 +5,7 @@
         :name="btn.type"
         v-for="btn in buttons"
         :key="btn.text"
-        @click="handleBtn"
+        @click="handle(btn)"
         :class="{
           'btn--reset': btn.text === 'RESET' || btn.text === 'DEL',
           'btn--equally': btn.text === '=',
@@ -27,9 +27,21 @@ export default {
       type: Array,
       required: true,
     },
-
-    handleBtn: {
-      type: Function,
+  },
+  methods: {
+    handle(btn) {
+      switch (btn.type) {
+        case 'operator':
+          return this.$emit('operator', btn)
+        case 'reset':
+          return this.$emit('reset')
+        case 'delete':
+          return this.$emit('delete')
+        case 'equally':
+          return this.$emit('equally')
+        default:
+          return this.$emit('digit', btn)
+      }
     },
   },
 }
@@ -40,6 +52,7 @@ export default {
   background-color: var(--toggle-keypad-bg);
   border-radius: 10px;
   padding: 7% 7% 9%;
+
   & .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -47,6 +60,7 @@ export default {
     row-gap: clamp(17px, 4vw, 28px);
   }
 }
+
 @media (min-width: 1440px) {
   .controls {
     padding: 6% 6% 7%;
