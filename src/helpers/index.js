@@ -43,21 +43,21 @@ export function calculate(a, b, operator) {
 }
 
 export function checkValueForDoublesZeroDot(value, btn) {
-  if ((value === '0' && btn === '0') || (value.includes('.') && btn === '.'))
-    return true
+  return (value === '0' && btn === '0') || (value.includes('.') && btn === '.')
 }
 
 export function zeroDot(value, dot) {
-  if ((dot === '.' && !value) || (dot === '.' && value === '0')) {
-    return true
-  }
+  return (dot === '.' && !value) || (dot === '.' && value === '0')
 }
 
 export function deleteDigitFromEnd(digit) {
-  let str = digit.slice(0, digit.length - 1)
+  let str = digit.slice(0, -1)
 
   if (!str.length) str = '0'
 
+  if (str[str.length - 1] === '.') {
+    return str.slice(0, -1)
+  }
   return str
 }
 

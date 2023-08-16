@@ -22,6 +22,7 @@ import CustomButton from '@/components/UI/CustomButton.vue'
 
 export default {
   components: { CustomButton },
+  emits: ['equally', 'digit', 'delete', 'operator', 'reset'],
   props: {
     buttons: {
       type: Array,

@@ -60,7 +60,6 @@ export default {
         digitA: '',
         digitB: '',
         operator: '',
-        flagDigit: false,
         flagOperator: false,
         equally: false,
         result: '',
@@ -73,9 +72,21 @@ export default {
   mounted() {
     this.getTheme()
   },
+  computed: {
+    showHistory() {
+      return `${this.calc.digitA} ${this.calc.operator} ${
+        this.calc.digitB ? this.calc.digitB + ' =' : ''
+      }`
+    },
+    convertWithComma() {
+      return this.calc.result === 'Division by zero'
+        ? this.calc.result
+        : divideByComma(this.calc.result)
+    },
+  },
   watch: {
     'calc.result'() {
-      this.toDisplay()
+      this.calc.display = this.convertWithComma
     },
   },
   methods: {
@@ -92,8 +103,6 @@ export default {
         localStorage.setItem('theme', key)
       }
     },
-
-    // !FIX
     digits({ text: digit }) {
       if (this.calc.flagOperator) {
         // Number B
@@ -121,19 +130,15 @@ export default {
         this.calc.digitA = checkNumber(this.calc.digitA, digit)
         this.calc.result = this.calc.digitA
       }
-      this.calc.flagDigit = true
     },
-    operators({ text: sing }) {
+    operators({ text: sign }) {
       this.calc.flagOperator = true
       this.calc.equally = false
-      this.calc.flagDigit = false
       this.calc.digitB = ''
-      this.calc.operator = sing
+      this.calc.operator = sign
 
-      // previous res in A
-      this.calc.digitA = this.calc.result
       // history
-      this.calc.history = `${this.calc.digitA} ${this.calc.operator}`
+      this.calc.history = this.showHistory
     },
     equally() {
       if (!this.calc.operator) return
@@ -144,7 +149,6 @@ export default {
       }
 
       this.calc.equally = true
-      this.calc.flagDigit = false
       this.calc.flagOperator = false
 
       const res = calculate(
@@ -157,7 +161,8 @@ export default {
         ? Number(res.toFixed(6)).toString()
         : res.toString()
 
-      this.calc.history = `${this.calc.digitA} ${this.calc.operator} ${this.calc.digitB} =`
+      // history
+      this.calc.history = this.showHistory
 
       this.calc.digitA = this.calc.result
     },
@@ -167,30 +172,23 @@ export default {
         this.calc.history = ''
         return
       }
-      // if (!this.calc.flagDigit) return
-      if (!this.calc.equally) {
+      if (!this.calc.equally && !this.calc.flagOperator) {
+        this.calc.digitA = deleteDigitFromEnd(this.calc.digitA)
+        this.calc.result = this.calc.digitA
+      } else {
         this.calc.digitB = deleteDigitFromEnd(this.calc.digitB)
         this.calc.result = this.calc.digitB
-        // this.calc.equally = false
       }
     },
     resetCalc() {
       this.calc.digitA = ''
       this.calc.digitB = ''
       this.calc.operator = ''
-      this.calc.flagDigit = false
       this.calc.flagOperator = false
       this.calc.equally = false
       this.calc.result = ''
       this.calc.display = ''
       this.calc.history = ''
-    },
-    toDisplay() {
-      // convert result with comma
-      this.calc.display =
-        this.calc.result === 'Division by zero'
-          ? this.calc.result
-          : divideByComma(this.calc.result)
     },
   },
 }
