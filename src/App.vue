@@ -60,7 +60,7 @@ export default {
         digitA: '',
         digitB: '',
         operator: '',
-        flagDigit: true,
+        flagDigit: false,
         flagOperator: false,
         equally: false,
         result: '',
@@ -93,50 +93,42 @@ export default {
       }
     },
 
-    // !FIX rewrite digits after results
+    // !FIX
     digits({ text: digit }) {
-      this.calc.flagDigit = true
-      // Number B
+      if (this.calc.flagOperator) {
+        // Number B
+        if (checkValueForDoublesZeroDot(this.calc.digitB, digit)) return
 
-      if (checkValueForDoublesZeroDot(this.calc.digitB, digit)) return
+        this.calc.digitB = checkNumber(this.calc.digitB, digit)
+        this.calc.result = this.calc.digitB
+      } else if (this.calc.equally) {
+        //  Rewrite A
+        this.calc.digitA = ''
 
-      this.calc.digitB = checkNumber(this.calc.digitB, digit)
-      this.calc.result = this.calc.digitB
-
-      //  Rewrite A
-      if (this.calc.equally) {
-        this.calc.digitB = ''
-
-        if (zeroDot(this.calc.digitB, digit)) {
-          this.calc.digitB = '0.'
+        if (zeroDot(this.calc.digitA, digit)) {
+          this.calc.digitA = '0.'
         } else {
-          this.calc.digitB = digit
+          this.calc.digitA = digit
         }
 
-        this.calc.result = this.calc.digitB
+        this.calc.result = this.calc.digitA
         this.calc.equally = false
         this.calc.history = ''
-      }
-
-      // Number A
-      if (!this.calc.flagDigit) {
+      } else {
+        // Number A
         if (checkValueForDoublesZeroDot(this.calc.digitA, digit)) return
 
         this.calc.digitA = checkNumber(this.calc.digitA, digit)
         this.calc.result = this.calc.digitA
       }
+      this.calc.flagDigit = true
     },
     operators({ text: sing }) {
       this.calc.flagOperator = true
       this.calc.equally = false
       this.calc.flagDigit = false
       this.calc.digitB = ''
-
-      if (sing === 'x') {
-        this.calc.operator = '*'
-      } else {
-        this.calc.operator = sing
-      }
+      this.calc.operator = sing
 
       // previous res in A
       this.calc.digitA = this.calc.result
@@ -186,7 +178,7 @@ export default {
       this.calc.digitA = ''
       this.calc.digitB = ''
       this.calc.operator = ''
-      this.calc.flagDigit = true
+      this.calc.flagDigit = false
       this.calc.flagOperator = false
       this.calc.equally = false
       this.calc.result = ''

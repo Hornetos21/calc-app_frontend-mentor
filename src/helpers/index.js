@@ -1,5 +1,6 @@
 export function divideByComma(str) {
   const arr = str.split('')
+  if (arr.includes('-') && arr.length === 4) return arr.join('')
   if (arr.includes('.')) {
     const comma = arr.findIndex((el) => el === '.')
 
@@ -27,7 +28,7 @@ export function calculate(a, b, operator) {
     case '-':
       res = A - B
       break
-    case '*':
+    case 'x':
       res = A * B
       break
     case '/':
